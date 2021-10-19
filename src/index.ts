@@ -6,6 +6,7 @@ import {
   ExpressExecutor 
 } from "./types";
 
+export * from './types';
 export const manifestation = {
   /**
    * Send an API response within an express method
@@ -68,7 +69,7 @@ export const manifestation = {
     const route404: ExpressExecutor = options.route404 ?? function (req, res) {
       const response = manifestation.newApiResponse({
         status: 404,
-        message: `Cannot ${req.method} ${req.route}`,
+        message: `Cannot ${req.method} ${req.path}`,
         successful: false
       });
 
