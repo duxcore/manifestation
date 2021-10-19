@@ -1,3 +1,21 @@
 {
-  "name": "manifestation"
+  "name": "manifestation",
+  "author": {
+    "name": "Jackson Roberts",
+    "email": "jackson@holopanio.com"
+  },
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "repository": "https://github.com/duxcore/manifestation.git",
+  "license": "GPL-3.0",
+  "scripts": {
+    "build": "tsc",
+    "postinstall": "tsc"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13"
+  }
 }
