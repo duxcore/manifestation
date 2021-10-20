@@ -10,7 +10,8 @@
   "license": "GPL-3.0",
   "private": false,
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "prepublish": "tsc"
   },
   "dependencies": {
     "express": "^4.17.1"
