@@ -5,7 +5,7 @@
   <a href="https://discord.gg/dTGJ5Bchnq">
     <img src="https://img.shields.io/discord/844279877503025182?label=Discord&logo=discord&logoColor=white&style=for-the-badge" />
   </a>
-  <a href="https://www.npmjs.com/package/trixi">
+  <a href="https://www.npmjs.com/package/@duxcore/manifestation">
     <img src="https://img.shields.io/npm/dw/@duxcore/manifestation?logo=npm&style=for-the-badge" />
     <img src="https://img.shields.io/npm/v/@duxcore/manifestation/latest?label=Latest%20Version&style=for-the-badge" />
   </a>
