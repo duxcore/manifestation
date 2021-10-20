@@ -8,6 +8,7 @@
   "main": "lib/index.js",
   "repository": "https://github.com/duxcore/manifestation.git",
   "license": "GPL-3.0",
+  "private": false,
   "scripts": {
     "build": "tsc",
     "postinstall": "tsc"
