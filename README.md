@@ -12,9 +12,12 @@
   </h1>
 </span>
 
-This is a very lightwiehgt manifestation library that is designed to make it easier to create express.js api's.  Simply create a manifestation object.  Create an api server using the manifestation object and then enjoy your new manifested api server.
+This is a very lightweight manifestation library that is designed to make it
+easier to create Express.js APIs. Simply create a manifestation object, create
+an API server using the manifestation object and then enjoy your new manifested
+API server.
 
-Example Code
+## Example Code
 ```ts
 import { manifestation, ApiManifest } from "@duxcore/manifestation";
 
