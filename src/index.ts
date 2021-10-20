@@ -136,7 +136,7 @@ export const manifestation = {
      * Map out all of the versions and their associated routes.
      */
     manifest.versions?.map(version => {
-      const vPrefix = `/v${version}`;
+      const vPrefix = `/v${version.version}`;
 
       version.routes.map(route => {
         if (typeof route.method == "string") 
