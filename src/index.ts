@@ -1,4 +1,4 @@
-import express from "express";
+import express, {Application} from "express";
 import { 
   ApiManifest, 
   ApiResponse, 
@@ -85,7 +85,7 @@ export const manifestation = {
    * 
    * @returns - The final express object.
    */
-  createServer(manifest: ApiManifest, options: CreateServerOptions): express.Application {
+  createServer(manifest: ApiManifest, options: CreateServerOptions): Application {
 
     // Establish the values from the options object.
     const application = options.express ?? express();
