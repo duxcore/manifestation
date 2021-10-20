@@ -1,4 +1,18 @@
-import {manifestation, ApiManifest} from "./src/index";
+import { manifestation, ApiManifest } from "./src/index";
+
+const teapot = manifestation.newRoute({
+  route: "/teapot",
+  method: "all",
+  executor: (req, res) => {
+    const response = manifestation.newApiResponse({
+      status: 418,
+      message: "I'm not a teapot",
+      successful: true
+    });
+
+    manifestation.sendApiResponse(res, response);
+  }
+})
 
 /**
  * Example Manifest
@@ -9,39 +23,11 @@ import {manifestation, ApiManifest} from "./src/index";
  * /v1/teapot
  */
 const manifest: ApiManifest = {
-  routes: [
-    {
-      route: "/teapot",
-      method: "all",
-      executor: (req, res) => {
-        const response = manifestation.newApiResponse({
-          status: 418,
-          message: "I'm not a teapot",
-          successful: true
-        });
-
-        manifestation.sendApiResponse(res, response);
-      }
-    }
-  ],
+  routes: [ teapot ],
   versions: [
     {
       version: 1,
-      routes: [
-        {
-          route: "/teapot",
-          method: "all",
-          executor: (req, res) => {
-            const response = manifestation.newApiResponse({
-              status: 418,
-              message: "I'm not a teapot",
-              successful: true
-            });
-    
-            manifestation.sendApiResponse(res, response);
-          }
-        }
-      ]
+      routes: [ teapot ]
     }
   ]
 }

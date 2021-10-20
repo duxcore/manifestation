@@ -2,6 +2,7 @@ import express from "express";
 import { 
   ApiManifest, 
   ApiResponse, 
+  ApiRoute,
   CreateServerOptions, 
   ExpressExecutor 
 } from "./types";
@@ -45,6 +46,31 @@ export const manifestation = {
         timestamp: data.meta?.timestamp ?? new Date().getTime()
       }
     };
+  },
+
+  /**
+   * Create a new route object
+   * 
+   * This will create a route object with types to make it easy for anybody to create a new route
+   * object.
+   *  
+   * @param route - The route object
+   * @returns {Apiroute} - The Route object
+   */
+  newRoute(route: ApiRoute): ApiRoute {
+    return route;
+  },
+
+  /**
+   * Create a new manifest object
+   * 
+   * This will simply create a manifest object that can be used with types for accessability.
+   * 
+   * @param manifest - The manifest object
+   * @returns {ApiManifest} - The api manifest object
+   */
+  newManifest(manifest: ApiManifest): ApiManifest {
+    return manifest;
   },
 
   /**
