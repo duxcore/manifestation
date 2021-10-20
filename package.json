@@ -4,14 +4,13 @@
     "name": "Jackson Roberts",
     "email": "jackson@holopanio.com"
   },
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "lib/index.js",
   "repository": "https://github.com/duxcore/manifestation.git",
   "license": "GPL-3.0",
   "private": false,
   "scripts": {
-    "build": "tsc",
-    "postinstall": "tsc"
+    "build": "tsc"
   },
   "dependencies": {
     "express": "^4.17.1"
