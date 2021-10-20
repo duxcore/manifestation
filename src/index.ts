@@ -83,7 +83,7 @@ export const manifestation = {
    * @param manifest - The manifest object with your API's configuration.
    * @param options - The options to be used when creating your api server
    * 
-   * @returns {express.Application} - The final express object.
+   * @returns - The final express object.
    */
   createServer(manifest: ApiManifest, options: CreateServerOptions): express.Application {
 
