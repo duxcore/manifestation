@@ -40,7 +40,7 @@ const teapot = manifestation.newRoute({
  * /teapot
  * /v1/teapot
  */
-const manifest: ApiManifest = {
+const manifest = manifestation.newManifest({
   routes: [ teapot ],
   versions: [
     {
@@ -48,7 +48,7 @@ const manifest: ApiManifest = {
       routes: [ teapot ]
     }
   ]
-}
+})
 
 manifestation.createServer(manifest, {}).listen(2020, () => { console.log("started")});
 ```
