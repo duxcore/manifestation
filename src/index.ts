@@ -22,7 +22,7 @@ export const manifestation = {
     res: express.Response,
     response: ApiResponse
   ): void {
-    res.status(response.status ?? 200).json(response);
+    res.status(response.status ?? 200).json(this.newApiResponse(response));
 
     return;
   },
