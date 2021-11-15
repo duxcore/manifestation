@@ -2,12 +2,12 @@ import * as Express from "express";
 
 export type ExpressExecutor = (req: Express.Request, res: Express.Response) => void
 
-export type MethodTypes = 
-  | "get" 
-  | "post" 
-  | "put" 
-  | "delete" 
-  | "patch" 
+export type MethodTypes =
+  | "get"
+  | "post"
+  | "put"
+  | "delete"
+  | "patch"
   | "all"
 
 export interface CreateServerOptions {
@@ -24,6 +24,7 @@ export type MiddlewareMethod = (
 
 export interface ApiManifest {
   routes?: ApiRoute[];
+  routers?: ApiRouter[];
   middleware?: MiddlewareMethod[];
   versions?: ApiVersionManifest[];
 }
@@ -35,10 +36,17 @@ export interface ApiRoute {
   executor: ExpressExecutor;
 }
 
+export interface ApiRouter {
+  route: string;
+  middleware?: MiddlewareMethod[];
+  routes: ApiRoute[];
+}
+
 export interface ApiVersionManifest {
   version: number; // what version of the api is this?
   middleware?: MiddlewareMethod[];
   routes: ApiRoute[];
+  routers?: ApiRouter[];
 }
 
 export interface ApiResponse {

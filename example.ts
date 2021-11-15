@@ -23,14 +23,26 @@ const teapot = manifestation.newRoute({
  * /v1/teapot
  */
 const manifest = manifestation.newManifest({
-  routes: [ teapot ],
+  routes: [teapot],
   versions: [
     {
       version: 1,
-      routes: [ teapot ]
+      routes: [teapot],
+      routers: [
+        {
+          route: "/demoRouter",
+          routes: [teapot]
+        }
+      ]
+    }
+  ],
+  routers: [
+    {
+      route: "/demoRouter",
+      routes: [teapot]
     }
   ]
 })
 
-manifestation.createServer(manifest, {}).listen(2020, () => { console.log("started")});
+manifestation.createServer(manifest, {}).listen(2020, () => { console.log("started") });
 

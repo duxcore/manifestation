@@ -1,10 +1,10 @@
-import express, {Application} from "express";
-import { 
-  ApiManifest, 
-  ApiResponse, 
+import express, { Application } from "express";
+import {
+  ApiManifest,
+  ApiResponse,
   ApiRoute,
-  CreateServerOptions, 
-  ExpressExecutor 
+  CreateServerOptions,
+  ExpressExecutor
 } from "./types";
 
 export * from './types';
@@ -22,7 +22,7 @@ export const manifestation = {
     response: ApiResponse
   ): void {
     res.status(response.status ?? 200).json(response);
-  
+
     return;
   },
 
@@ -102,63 +102,72 @@ export const manifestation = {
       return manifestation.sendApiResponse(res, response);
     }
 
+    const registerRoute = (route: ApiRoute, instance) => {
+      if (typeof route.method == "string")
+        instance[route.method](
+          route.route,
+          ...(route.middleware ?? []),
+          route.executor
+        );
+
+      if (typeof route.method == 'object')
+        route.method.map(method => {
+          instance[method](
+            route.route,
+            ...(route.middleware ?? []),
+            route.executor
+          );
+        });
+    }
+
     // Re-Establish the manifest
     manifest = {
       middleware: manifest.middleware ?? [],
       routes: manifest.routes ?? [],
+      routers: manifest.routers ?? [],
       versions: manifest.versions ?? []
     }
+
+    if ((manifest.middleware ?? []).length > 0) application.use(...(manifest.middleware ?? []));
 
     /**
      * Map out the base routes of the api with no version prefix
      */
-    manifest.routes?.map(route => {
-      if (typeof route.method == "string") 
-        application[route.method](
-          route.route,
-          ...(manifest.middleware ?? []), 
-          ...(route.middleware ??[]),
-          route.executor
-        );    
+    manifest.routes?.map(route => registerRoute(route, application));
 
-      if (typeof route.method == 'object')
-        route.method.map(method => {
-          application[method](
-            route.route,
-            ...(manifest.middleware ?? []), 
-            ...(route.middleware ??[]),
-            route.executor
-          );
-        });
-    });
-    
+    /**
+     * Map out the base routers of the api.
+     */
+    manifest.routers?.map(r => {
+      const router = express.Router();
+
+      if ((r.middleware ?? []).length > 0) router.use(...(r.middleware ?? []));
+      r.routes.map(route => registerRoute(route, router));
+
+      application.use(r.route, router);
+    })
+
     /**
      * Map out all of the versions and their associated routes.
      */
     manifest.versions?.map(version => {
       const vPrefix = `/v${version.version}`;
 
-      version.routes.map(route => {
-        if (typeof route.method == "string") 
-          application[route.method](
-            `${vPrefix}${route.route}`,
-            ...(manifest.middleware ?? []),
-            ...(version.middleware ?? []),
-            ...(route.middleware ??[]),
-            route.executor
-          );    
+      const versionRouter = express.Router();
 
-      if (typeof route.method == 'object')
-        route.method.map(method => {
-          application[method](
-            `${vPrefix}${route.route}`,
-            ...(manifest.middleware ?? []),
-            ...(version.middleware ?? []),
-            ...(route.middleware ??[]),
-            route.executor
-          );
-        });
+      version.routers?.map(r => {
+        const router = express.Router();
+
+        if ((r.middleware ?? []).length > 0) router.use(...(r.middleware ?? []));
+        r.routes.map(route => registerRoute(route, router));
+
+        versionRouter.use(r.route, router);
       })
+
+      if ((version.middleware ?? []).length > 0) versionRouter.use(...(version.middleware ?? []))
+      version.routes.map(route => registerRoute(route, versionRouter));
+
+      application.use(vPrefix, versionRouter)
     })
 
     /**
@@ -167,7 +176,6 @@ export const manifestation = {
     setTimeout(() => {
       application['all'](
         "*",
-        ...(manifest.middleware ?? []),
         route404
       )
     }, 1)
