@@ -3,6 +3,7 @@ import {
   ApiManifest,
   ApiResponse,
   ApiRoute,
+  ApiRouter,
   CreateServerOptions,
   ExpressExecutor
 } from "./types";
@@ -71,6 +72,16 @@ export const manifestation = {
    */
   newManifest(manifest: ApiManifest): ApiManifest {
     return manifest;
+  },
+
+  /**
+   * Create a router object that is typed correclty
+   * 
+   * @param router - Router object
+   * @returns Router object
+   */
+  newRouter(router: ApiRouter): ApiRouter {
+    return router;
   },
 
   /**
