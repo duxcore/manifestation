@@ -131,6 +131,16 @@ export const manifestation = {
         });
     }
 
+    const registerRouter = (r: ApiRouter, instance) => {
+      const router = express.Router();
+
+      if ((r.middleware ?? []).length > 0) router.use(...(r.middleware ?? []));
+      r.routes.map(route => registerRoute(route, router));
+      r.routers.map($r => registerRouter($r, router));
+
+      instance.use(r.route, router);
+    }
+
     // Re-Establish the manifest
     manifest = {
       middleware: manifest.middleware ?? [],
@@ -149,14 +159,7 @@ export const manifestation = {
     /**
      * Map out the base routers of the api.
      */
-    manifest.routers?.map(r => {
-      const router = express.Router();
-
-      if ((r.middleware ?? []).length > 0) router.use(...(r.middleware ?? []));
-      r.routes.map(route => registerRoute(route, router));
-
-      application.use(r.route, router);
-    })
+    manifest.routers?.map(r => registerRouter(r, application))
 
     /**
      * Map out all of the versions and their associated routes.
@@ -166,14 +169,7 @@ export const manifestation = {
 
       const versionRouter = express.Router();
 
-      version.routers?.map(r => {
-        const router = express.Router();
-
-        if ((r.middleware ?? []).length > 0) router.use(...(r.middleware ?? []));
-        r.routes.map(route => registerRoute(route, router));
-
-        versionRouter.use(r.route, router);
-      })
+      version.routers?.map(r => registerRouter(r, versionRouter));
 
       if ((version.middleware ?? []).length > 0) versionRouter.use(...(version.middleware ?? []))
       version.routes.map(route => registerRoute(route, versionRouter));
