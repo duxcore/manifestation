@@ -4,7 +4,7 @@
     "name": "Jackson Roberts",
     "email": "jackson@holopanio.com"
   },
-  "version": "1.2.1",
+  "version": "1.2.2",
   "main": "lib/index.js",
   "repository": "https://github.com/duxcore/manifestation.git",
   "license": "GPL-3.0",
