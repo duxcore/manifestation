@@ -136,7 +136,7 @@ export const manifestation = {
 
       if ((r.middleware ?? []).length > 0) router.use(...(r.middleware ?? []));
       r.routes.map(route => registerRoute(route, router));
-      r.routers.map($r => registerRouter($r, router));
+      (r.routers ?? []).map($r => registerRouter($r, router));
 
       instance.use(r.route, router);
     }

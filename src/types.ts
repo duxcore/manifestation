@@ -40,7 +40,7 @@ export interface ApiRouter {
   route: string;
   middleware?: MiddlewareMethod[];
   routes: ApiRoute[];
-  routers: ApiRouter[];
+  routers?: ApiRouter[];
 }
 
 export interface ApiVersionManifest {
