@@ -1,4 +1,5 @@
 import express, { Application } from "express";
+import expressWs from "express-ws";
 import {
   ApiManifest,
   ApiResponse,
@@ -6,6 +7,7 @@ import {
   ApiRouter,
   CreateServerOptions,
   ExpressExecutor,
+  WebSocketApiRoute,
 } from "./types";
 
 export * from "./types";
@@ -60,6 +62,13 @@ export const manifestation = {
     return route;
   },
 
+  newWebsocketRoute(
+    route: WebSocketApiRoute
+  ): WebSocketApiRoute & { method: "ws" } {
+    route["method"] = "ws";
+    return route as ReturnType<typeof this.newWebsocketRoute>;
+  },
+
   /**
    * Create a new manifest object
    *
@@ -99,7 +108,7 @@ export const manifestation = {
     options: CreateServerOptions
   ): Application {
     // Establish the values from the options object.
-    const application = options.express ?? express();
+    const application = expressWs(options.express ?? express());
     const port = options.port ?? 8080;
 
     // Establish the 404 route that will be used if a route doesn't exist.

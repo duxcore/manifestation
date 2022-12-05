@@ -1,6 +1,14 @@
 import * as Express from "express";
 
-export type ExpressExecutor = (req: Express.Request, res: Express.Response) => void
+export type ExpressExecutor = (
+  req: Express.Request,
+  res: Express.Response
+) => void;
+
+export type ExpressWebsocketExecutor = (
+  ws: WebSocket,
+  res: Express.Response
+) => void;
 
 export type MethodTypes =
   | "get"
@@ -9,15 +17,22 @@ export type MethodTypes =
   | "delete"
   | "patch"
   | "all"
+  | "ws";
 
 export interface CreateServerOptions {
-  port?: number,
-  express?: Express.Application,
+  port?: number;
+  express?: Express.Application;
   route404?: ExpressExecutor;
 }
 
 export type MiddlewareMethod = (
   req: Express.Request,
+  res: Express.Response,
+  next: () => void
+) => void;
+
+export type WebsocketMiddlewareMethod = (
+  ws: WebSocket,
   res: Express.Response,
   next: () => void
 ) => void;
@@ -34,6 +49,12 @@ export interface ApiRoute {
   method: MethodTypes[] | MethodTypes;
   middleware?: MiddlewareMethod[];
   executor: ExpressExecutor;
+}
+
+export interface WebSocketApiRoute {
+  route: string;
+  middleware?: MiddlewareMethod[];
+  executor: ExpressWebsocketExecutor;
 }
 
 export interface ApiRouter {
