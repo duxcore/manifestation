@@ -124,7 +124,10 @@ export const manifestation = {
         return manifestation.sendApiResponse(res, response);
       };
 
-    const registerRoute = (route: ApiRoute, instance) => {
+    const registerRoute = (
+      route: ApiRoute | (WebSocketApiRoute & { method: "ws" }),
+      instance
+    ) => {
       if (typeof route.method == "string")
         instance[route.method](
           route.route,
@@ -146,7 +149,9 @@ export const manifestation = {
       const router = express.Router();
 
       if ((r.middleware ?? []).length > 0) router.use(...(r.middleware ?? []));
-      r.routes.map((route) => registerRoute(route, router));
+      (r.routes as (ApiRoute | (WebSocketApiRoute & { method: "ws" }))[]).map(
+        (route) => registerRoute(route, router)
+      );
       (r.routers ?? []).map(($r) => registerRouter($r, router));
 
       instance.use(r.route, router);
@@ -166,7 +171,11 @@ export const manifestation = {
     /**
      * Map out the base routes of the api with no version prefix
      */
-    manifest.routes?.map((route) => registerRoute(route, application));
+    (
+      manifest.routes as (ApiRoute | (WebSocketApiRoute & { method: "ws" }))[]
+    )?.map((route: ApiRoute | (WebSocketApiRoute & { method: "ws" })) =>
+      registerRoute(route, application)
+    );
 
     /**
      * Map out the base routers of the api.

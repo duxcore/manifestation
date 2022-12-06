@@ -38,7 +38,7 @@ export type WebsocketMiddlewareMethod = (
 ) => void;
 
 export interface ApiManifest {
-  routes?: ApiRoute[];
+  routes?: (ApiRoute | WebSocketApiRoute)[];
   routers?: ApiRouter[];
   middleware?: MiddlewareMethod[];
   versions?: ApiVersionManifest[];
@@ -60,7 +60,7 @@ export interface WebSocketApiRoute {
 export interface ApiRouter {
   route: string;
   middleware?: MiddlewareMethod[];
-  routes: ApiRoute[];
+  routes: (ApiRoute | WebSocketApiRoute)[];
   routers?: ApiRouter[];
 }
 
