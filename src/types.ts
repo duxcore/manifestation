@@ -7,7 +7,7 @@ export type ExpressExecutor = (
 
 export type ExpressWebsocketExecutor = (
   ws: WebSocket,
-  res: Express.Response
+  req: Express.Request
 ) => void;
 
 export type MethodTypes =
@@ -33,7 +33,7 @@ export type MiddlewareMethod = (
 
 export type WebsocketMiddlewareMethod = (
   ws: WebSocket,
-  res: Express.Response,
+  req: Express.Request,
   next: () => void
 ) => void;
 
