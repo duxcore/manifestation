@@ -194,7 +194,9 @@ export const manifestation = {
 
       if ((version.middleware ?? []).length > 0)
         versionRouter.use(...(version.middleware ?? []));
-      version.routes.map((route) => registerRoute(route, versionRouter));
+      (
+        version.routes as (ApiRoute | (WebSocketApiRoute & { method: "ws" }))[]
+      ).map((route) => registerRoute(route, versionRouter));
 
       application.use(vPrefix, versionRouter);
     });

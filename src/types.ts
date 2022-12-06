@@ -67,7 +67,7 @@ export interface ApiRouter {
 export interface ApiVersionManifest {
   version: number; // what version of the api is this?
   middleware?: MiddlewareMethod[];
-  routes: ApiRoute[];
+  routes?: (ApiRoute | (WebSocketApiRoute & { method: "ws" }))[];
   routers?: ApiRouter[];
 }
 
