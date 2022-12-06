@@ -108,7 +108,7 @@ export const manifestation = {
     options: CreateServerOptions
   ): Application {
     // Establish the values from the options object.
-    const application = expressWs(options.express ?? express());
+    const application = expressWs(options.express ?? express()).app;
     const port = options.port ?? 8080;
 
     // Establish the 404 route that will be used if a route doesn't exist.
